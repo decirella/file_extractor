@@ -38,7 +38,6 @@ def get_img(dir_path):
 
 def img_fiwalk(img_path):
     #run fiwalk over file, generate dfxml file
-    print(img_path)
     dfxml_path = img_path[:-4] + '.xml'
     dfxml_gen = subprocess.call(["fiwalk","-X", dfxml_path, img_path])
     #dfxml_gen.wait()
@@ -73,10 +72,7 @@ def get_file_info(dom, part_offset, img_path):
         hash_stored = 'none'
         for hashtype in hash_stored_Obj:
             if hashtype.getAttribute('type') == 'md5':
-                #hash_stored = 'md5'
-                hash_stored = getText(hashtype.childNodes)
-        #print(file_name, inode, hash_stored)
-        
+                hash_stored = getText(hashtype.childNodes)        
         meta_type_Obj = fileObj.getElementsByTagName('meta_type')[0]
         meta_type = getText(meta_type_Obj.childNodes)
         
@@ -90,7 +86,6 @@ def get_file_info(dom, part_offset, img_path):
 def icat_extract(file_name, file_inode, part_offset, hash_stored, img_path):
     # call icat on infor to perform extract
     working_dir = img_path.rsplit('/', 1)[0] + "/extraction/"  
-    print(working_dir)
     part_offset = str(part_offset)[:-2]
     icat_job = subprocess.run(["icat","-o", part_offset, img_path, file_inode], stdout=subprocess.PIPE)
     working_dir2 = working_dir + file_name.rsplit('/', 1)[0]
