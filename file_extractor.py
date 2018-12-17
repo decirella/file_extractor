@@ -21,7 +21,11 @@ import xml.dom.minidom
 def get_img_re(dir_path):
     p = pathlib.Path(dir_path)
     for x in p.iterdir():
-        get_img(str(x))
+        # prevent accessing dir created by script, avoid temp files
+        if 'extraction' in str(x) or '~' in str(x):
+            pass
+        else:
+            get_img(str(x))
     return 0
 
 def get_img(dir_path):
@@ -33,7 +37,7 @@ def get_img(dir_path):
             img_fiwalk(img_path)
             break
         else:
-            print('Error, no disk image files')
+            print(dir_path + "/" + entry, 'No disk image files')
     return 0
 
 def img_fiwalk(img_path):
