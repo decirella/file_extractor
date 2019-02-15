@@ -22,7 +22,9 @@ def get_img_re(dir_path):
     p = pathlib.Path(dir_path)
     for x in p.iterdir():
         # prevent accessing dir created by script, avoid temp files
-        if 'extraction' in str(x) or '~' in str(x):
+        if x.suffix:
+            pass
+        elif 'extraction' in str(x) or '~' in str(x):
             pass
         else:
             get_img(str(x))
